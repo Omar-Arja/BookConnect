@@ -17,6 +17,6 @@ const upload = multer({ storage: storage });
 
 router.get("/", authMiddleware, postsController.getFeed);
 router.post("/", authMiddleware ,upload.single("pic"), postsController.createPost);
-router.post("/:id/toggle-like", authMiddleware, postsController.toggleLikePost);
+router.post("/:postId/toggle-like", authMiddleware, postsController.toggleLikePost);
 
 module.exports = router;

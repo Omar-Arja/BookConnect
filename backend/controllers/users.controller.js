@@ -9,8 +9,7 @@ const register = async (req, res) => {
   const user = new User({
     email,
     password: hashedPassword,
-    name,
-    posts: [],
+    name
   })
 
   try {

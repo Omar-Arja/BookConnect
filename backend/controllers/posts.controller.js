@@ -39,7 +39,6 @@ const createPost = async (req, res) => {
       genre,
       review,
       pic_url,
-      likes: [],
     });
 
     await post.save();
@@ -56,8 +55,48 @@ const createPost = async (req, res) => {
 };
 
 const toggleLikePost = async (req, res) => {
+  const { user } = req;
+  const { postId } = req.params;
 
+  try {
+    const post = await Post.findById(postId).populate("likes");
+
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+
+    const isLiked = post.likes.some(
+      (like) => like.user && like.user._id.toString() === user._id.toString()
+    );
+
+    if (!isLiked) {
+      const newLike = new Like({ user: user._id });
+      await newLike.save();
+
+      post.likes.push(newLike);
+      await post.save();
+
+      return res.send({ message: "Post liked" });
+    }
+
+    const likeToRemove = post.likes.find(
+      (like) => like.user && like.user._id.toString() === user._id.toString()
+    );
+
+    if (likeToRemove) {
+      await Like.findByIdAndDelete(likeToRemove._id);
+      post.likes.pull(likeToRemove._id);
+      await post.save();
+      return res.send({ message: "Post unliked" });
+    }
+
+    return res.status(404).send({ message: "Like not found" });
+  } catch (error) {
+    console.error("Error toggling like:", error);
+    res.status(500).send({ message: "Something went wrong" });
+  }
 };
+
 
 module.exports = {
   getFeed,
