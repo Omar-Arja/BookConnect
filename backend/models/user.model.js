@@ -47,5 +47,12 @@ const userSchema = new mongoose.Schema({
 
 })
 
-const model = mongoose.model("User", userSchema)
-module.exports = model;
+const User = mongoose.model("User", userSchema);
+const Post = mongoose.model("Post", postSchema);
+const Like = mongoose.model("Like", likeSchema);
+
+module.exports = {
+  User,
+  Post,
+  Like
+}
