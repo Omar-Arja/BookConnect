@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt")
-const User = require("../models/user.model")
+const {User} = require("../models/user.model")
 
 const register = async (req, res) => {
   const { email, password, name } = req.body
@@ -9,7 +9,8 @@ const register = async (req, res) => {
   const user = new User({
     email,
     password: hashedPassword,
-    name
+    name,
+    posts: [],
   })
 
   try {
