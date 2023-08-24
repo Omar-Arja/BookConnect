@@ -1,0 +1,73 @@
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 50px;
+  position: sticky;
+  left: 0;
+  top: 0;
+  background-color: var(--color-primary);
+  color: var(--color-background-dark);
+}
+
+.sidebar .logo {
+  width: 100px;
+  margin-top: 50px;
+}
+
+.sidebar .items {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+  cursor: pointer;
+  margin-left: 2.4rem;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 60px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.sidebar-item .active {
+  background-color: var(--color-primary-dark);
+  color: var(--color-background-dark);
+  font-weight: bold;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-item:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-background-dark);
+}
+
+.sidebar-item.active {
+  background-color: var(--color-primary-dark);
+  color: var(--color-background-dark);
+  font-weight: bold;
+}
