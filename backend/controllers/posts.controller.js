@@ -35,6 +35,38 @@ const getFeed = async (req, res) => {
   }
 };
 
+const getDefaultFeed = async (req, res) => {
+  try {const users = await User.find().populate("posts").populate({ path: "posts", populate: { path: "likes" } });
+  
+  const feed = [];
+
+  for (const user of users) {
+    for (const post of user.posts) {
+      const postObj = post.toObject();
+      postObj.userId = user._id;
+      postObj.username = user.name;
+
+      const likedPost = await Post.findById(postObj._id).populate("likes");
+
+      if (likedPost) {
+        postObj.isLiked = likedPost.likes.some(
+          (like) => like.user && like.user._id.toString() === req.user._id.toString()
+        );
+        postObj.likeCount = likedPost.likes.length;
+
+        feed.push(postObj);
+      } 
+    }
+  }
+
+  feed.sort((a, b) => b.likeCount - a.likeCount);
+  res.send(feed);
+  } catch (error) {
+    console.error("Error getting feed:", error);
+    res.status(500).send({ message: "Something went wrong", error });
+  }
+};
+
 
 const createPost = async (req, res) => {
   const { user } = req;
@@ -110,6 +142,7 @@ const toggleLikePost = async (req, res) => {
 
 module.exports = {
   getFeed,
+  getDefaultFeed,
   createPost,
   toggleLikePost,
 };

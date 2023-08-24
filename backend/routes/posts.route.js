@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get("/", authMiddleware, postsController.getFeed);
+router.get("/default", authMiddleware, postsController.getDefaultFeed);
 router.post("/", authMiddleware, upload.single("pic"), postsController.createPost);
 router.post("/toggle-like/:postId", authMiddleware, postsController.toggleLikePost);
 router.get("/search", authMiddleware, searchController.searchPosts);
