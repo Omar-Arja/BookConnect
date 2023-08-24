@@ -5,9 +5,7 @@
   flex-flow: column;
   align-items: center;
   gap: 50px;
-  position: sticky;
-  left: 0;
-  top: 0;
+  position: fixed;
   background-color: var(--color-primary);
   color: var(--color-background-dark);
 }

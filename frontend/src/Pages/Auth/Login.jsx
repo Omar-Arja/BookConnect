@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { sendRequest } from "../../config/request";
 
+
 const LoginPage = () => {
 	const navigate = useNavigate();
 	const submitButton = useRef();

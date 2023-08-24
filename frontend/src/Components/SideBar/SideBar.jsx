@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import SidebarItem from "./SideBarItem";
 
+
 const Sidebar = ({ items, selected = items[0].label }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,7 +13,7 @@ const Sidebar = ({ items, selected = items[0].label }) => {
   const [selectedTab, setSelectedTab] = useState(selected);
 
   useEffect(() => {
-    
+
     const currentPath = location.pathname.split("/")[1];
     if (currentPath) {
       if (currentPath === "my-feed") {

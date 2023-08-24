@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import "./style.css";
+import { useState, useEffect } from "react";
+import { sendRequest } from "../../config/request";
 import Sidebar from "../../Components/SideBar/SideBar";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -8,6 +9,22 @@ import { FaUserAlt } from "react-icons/fa";
 
 
 const MyFeed = () => {
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            const response = await sendRequest({ method: "GET", route: "/posts/" });
+            console.log(response);
+
+            if (response.length > 0) {
+                setBooks(response);
+            } else {
+                setBooks(null);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
     const items = [
         {
             label: "Discover",
@@ -48,6 +65,9 @@ const MyFeed = () => {
                     />
                     {<BiSearchAlt2 className="search-icon" />}
                 </div>}
+                { !books && <div className="empty-state">
+                    <h2>Nothing to see here</h2>
+                            </div>}
                 <div className="book-results">
 
                 </div>

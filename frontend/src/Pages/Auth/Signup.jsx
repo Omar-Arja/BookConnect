@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { sendRequest } from '../../config/request';
 import { useRef } from 'react';
 
+
 const SignUpPage = () => {
 
   const navigate = useNavigate();
