@@ -45,7 +45,7 @@
   background-color: var(--color-primary-dark);
 }
 
-.sidebar-item .active {
+.sidebar-item.active {
   background-color: var(--color-primary-dark);
   color: var(--color-background-dark);
   font-weight: bold;
@@ -64,10 +64,4 @@
 .sidebar-item:hover {
   background-color: var(--color-primary-dark);
   color: var(--color-background-dark);
-}
-
-.sidebar-item.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-background-dark);
-  font-weight: bold;
 }

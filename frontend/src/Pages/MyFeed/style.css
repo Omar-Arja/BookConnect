@@ -39,6 +39,11 @@
   margin-top: 20px;
 }
 
+.search-icon {
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
 .find-users-icon {
   font-size: 1.5rem;
   margin-left: -2px;

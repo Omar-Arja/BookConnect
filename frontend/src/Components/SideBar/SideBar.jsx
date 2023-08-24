@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import SidebarItem from "./SideBarItem";
 
 const Sidebar = ({ items, selected = items[0].label }) => {
-    console.log(items);
+  console.log(items);
   const navigate = useNavigate();
+  
   const [selectedTab, setSelectedTab] = useState(selected);
 
   const selectHandler = (label) => {
