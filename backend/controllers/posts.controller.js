@@ -70,7 +70,7 @@ const toggleLikePost = async (req, res) => {
 
   try {
     const post = await Post.findById(postId).populate("likes");
-    
+
     if (!post) {
       return res.status(404).send({ message: "Post not found" });
     }
