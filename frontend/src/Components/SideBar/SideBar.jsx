@@ -2,13 +2,36 @@ import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SidebarItem from "./SideBarItem";
 
 const Sidebar = ({ items, selected = items[0].label }) => {
-  console.log(items);
   const navigate = useNavigate();
+  const location = useLocation();
   
   const [selectedTab, setSelectedTab] = useState(selected);
+
+  useEffect(() => {
+    
+    const currentPath = location.pathname.split("/")[1];
+    if (currentPath) {
+      if (currentPath === "my-feed") {
+
+        setSelectedTab("My Feed");
+      } else if (currentPath === "discover") {
+
+        setSelectedTab("Discover");
+      } else if (currentPath === "find-users") {
+
+        setSelectedTab("Find Users");
+      } else if (currentPath === "create-post") {
+
+        setSelectedTab("Create Post");
+      } else {
+        setSelectedTab(currentPath);
+      } 
+    }
+  }, [location]);
 
   const selectHandler = (label) => {
     setSelectedTab(label);

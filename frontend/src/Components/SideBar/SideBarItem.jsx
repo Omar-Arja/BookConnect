@@ -3,15 +3,12 @@ import "./style.css";
 import { useNavigate } from "react-router-dom";
 
 
-const SidebarItem = ({ label, selected, onSelected, icon }) => {
+const SidebarItem = ({ label, selected, icon }) => {
   const navigate = useNavigate();
 
   const clickHandler = () => {
     const formattedLabel = label.toLowerCase().split(" ").join("-");
-    onSelected(label);
     navigate(`/${formattedLabel}`);
-    console.log(formattedLabel);
-    console.log(label, selected);
   };
 
   return (
