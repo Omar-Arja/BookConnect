@@ -1,6 +1,5 @@
 const { User } = require("../models/user.model");
 const { Post } = require("../models/user.model");
-const mongoose = require("mongoose");
 
 const searchPosts = async (req, res) => {
     const { query } = req.query;
