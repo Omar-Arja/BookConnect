@@ -4,27 +4,37 @@ const getFeed = async (req, res) => {
   const { user } = req;
 
   try {
-    const { following } = await User.findById(user._id).populate("following").populate("posts");
+    const { following } = await User.findById(user._id).populate("following").populate({ path: "posts", populate: { path: "likes" } });
 
     const feed = [];
 
-    following.forEach((followedUser) => {
-      followedUser.posts.forEach((post) => {
+    for (const followedUser of following) {
+      for (const followedPost of followedUser.posts) {
+        const post = followedPost.toObject();
+        post.userId = followedUser._id;
         post.username = followedUser.name;
-        post.isLiked = post.likes.some(
-          (like) => like.user.toString() === user._id.toString()
-        );
-        post.likeCount = post.likes.length;
-        feed.push(post);
-      });
-    });
+
+        const likedPost = await Post.findById(post._id).populate("likes");
+
+        if (likedPost) {
+          post.isLiked = likedPost.likes.some(
+            (like) => like.user && like.user._id.toString() === user._id.toString()
+          );
+          post.likeCount = likedPost.likes.length;
+
+          feed.push(post);
+        }
+      }
+    }
 
     feed.sort((a, b) => b.createdAt - a.createdAt);
     res.send(feed);
   } catch (error) {
+    console.error("Error getting feed:", error);
     res.status(500).send({ message: "Something went wrong", error });
   }
 };
+
 
 const createPost = async (req, res) => {
   const { user } = req;
@@ -43,7 +53,7 @@ const createPost = async (req, res) => {
 
     await post.save();
 
-    user.posts.push(post._id);
+    user.posts.push(post);
 
     await user.save();
     res.send(post);
@@ -60,7 +70,7 @@ const toggleLikePost = async (req, res) => {
 
   try {
     const post = await Post.findById(postId).populate("likes");
-
+    
     if (!post) {
       return res.status(404).send({ message: "Post not found" });
     }
