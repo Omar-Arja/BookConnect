@@ -6,7 +6,7 @@ const mongoDb = () => {
       console.log("Connected to book connect")
     })
     .catch(err => {
-      console.log(err) 
+      console.log(err)
     })
 }
 

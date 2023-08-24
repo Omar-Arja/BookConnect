@@ -1,11 +1,11 @@
 // const connection = require("../configs/db.connection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {User} = require("../models/user.model")
+const { User } = require("../models/user.model")
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
 
     if (!email || !password) {
