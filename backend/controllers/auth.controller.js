@@ -1,4 +1,3 @@
-// const connection = require("../configs/db.connection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user.model")
@@ -29,6 +28,8 @@ const login = async (req, res) => {
     const token = jwt.sign(userInfo, process.env.SECRET_KEY);
 
     return res.send({
+      status: "success",
+      message: "User logged in",
       token,
       user: userInfo
     });

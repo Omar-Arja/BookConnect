@@ -14,7 +14,11 @@ const register = async (req, res) => {
 
   try {
     await user.save();
-    res.send(user);
+    res.send({
+      status: "success",
+      message: "User created",
+      user
+    });
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).send('An error occurred while creating the user: ' + error.message);
