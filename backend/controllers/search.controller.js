@@ -93,6 +93,7 @@ const searchUsers = async (req, res) => {
             const modifiedUsers = matchingUsers.map(matchedUser => {
                 const userObj = matchedUser.toObject();
                 userObj.isFollowing = user.following.includes(matchedUser._id);
+                userObj.postsCount = matchedUser.posts.length;
                 return userObj;
             });
 
