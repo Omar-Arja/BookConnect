@@ -10,11 +10,9 @@ const BookCard = ({ book }) => {
 
     const [liked, setLiked] = useState(isLiked);
     const [likes, setLikes] = useState(likeCount);
-    console.log(liked, likes, pic_url);
 
     const handleLike = async () => {    
         const response = await sendRequest({ method: "POST", route: `/posts/toggle-like/${_id}` });
-        console.log(response);
 
         if (response.status === "success") {
             setLiked(!liked);

@@ -15,6 +15,23 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [books, setBooks] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [filteredBooks, setFilteredBooks] = useState(books);
+
+    useEffect(() => {
+        if (books && searchTerm) {
+            const filteredbooks = books.filter((book) => {
+                return (
+                    book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    book.genre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    book.review.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            });
+            setFilteredBooks(filteredbooks);
+        } else {
+            setFilteredBooks(books);
+        }
+    }, [searchTerm]);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -28,6 +45,7 @@ const Home = () => {
     
                 if (response.length > 0) {
                     setBooks(response);
+                    setFilteredBooks(response);
                 } else {
                     setBooks(null);
                 }
@@ -60,10 +78,6 @@ const Home = () => {
         },
     ];
 
-    const handleSearch = async () => {
-        
-    };
-
     return (
         <div className="home">
             <Sidebar items={items} />
@@ -92,7 +106,7 @@ const Home = () => {
                     )}
 
                 <div className="book-results">
-                    {books?.map((book) => (
+                    {filteredBooks?.map((book) => (
                         <BookCard key={book._id} book={book} />
                     ))}
                 </div>

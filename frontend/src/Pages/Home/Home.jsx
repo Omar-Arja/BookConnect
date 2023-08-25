@@ -9,31 +9,72 @@ import { MdOutlineExplore, MdPersonSearch } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 import { useEffect } from "react";
 
+
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await sendRequest({
-          method: "GET",
-          route: "/posts/default",
-        });
-        console.log(response);
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
 
-        if (response.length > 0) {
-          setBooks(response);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+   }, [value, delay]);
+
+  return debouncedValue;
+  };
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        if (debouncedSearchTerm) {
+          const response = await sendRequest({
+            method: "GET",
+            route: `/posts/search?query=${debouncedSearchTerm}`,
+          });
+          if (response.status === "success") {
+            setBooks(response.posts);
+          }
         } else {
-          setBooks(null);
+            fetchPosts();
         }
-        setLoading(false);
       } catch (error) {
-        console.error("Error fetching posts:", error);
-        setLoading(false);
+        console.error("Error fetching books:", error);
       }
     };
+
+    fetchBooks();
+  }, [debouncedSearchTerm]);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await sendRequest({
+        method: "GET",
+        route: "/posts/default",
+      });
+
+      if (response.length > 0) {
+        setBooks(response);
+      } else {
+        setBooks(null);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
 
     fetchPosts();
   }, []);
