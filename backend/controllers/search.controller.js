@@ -59,9 +59,12 @@ const searchPosts = async (req, res) => {
                 }
             }
 
-            return res.status(200).json({ message: "success", data: matchingPosts });
+            return res.status(200).json({ status: "success", posts: matchingPosts });
         } else {
-            return res.json({ message: "No matching posts found" });
+            return res.json({
+                status: "failed",
+                message: "No matching posts found"
+            });
         }
     } catch (error) {
         console.error(error);
@@ -97,9 +100,12 @@ const searchUsers = async (req, res) => {
                 return userObj;
             });
 
-            return res.status(200).json({ message: "success", posts: modifiedUsers });
+            return res.status(200).json({ status: "success", posts: modifiedUsers });
         } else {
-            return res.json({ message: "No matching users found" });
+            return res.json({
+                status: "failed",
+                message: "No matching users found"
+            });
         }
     } catch (error) {
         console.error(error);
