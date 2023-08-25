@@ -100,7 +100,7 @@ const searchUsers = async (req, res) => {
                 return userObj;
             });
 
-            return res.status(200).json({ status: "success", posts: modifiedUsers });
+            return res.status(200).json({ status: "success", users: modifiedUsers });
         } else {
             return res.json({
                 status: "failed",

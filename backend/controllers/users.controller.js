@@ -42,11 +42,17 @@ const toggleFollowUser = async (req, res) => {
     if (!isFollowing) {
       user.following.push(userId);
       await user.save();
-      return res.send({ message: "User followed" });
+      return res.send({ 
+        status: "success",
+        message: "User followed" 
+      });
     } else {
       user.following.pull(userId);
       await user.save();
-      return res.send({ message: "User unfollowed" });
+      return res.send({ 
+        status: "success",
+        message: "User unfollowed"
+       });
     }
   } catch (error) {
     console.error("Error toggling follow:", error);
