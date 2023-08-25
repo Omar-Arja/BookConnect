@@ -4,6 +4,7 @@ import LoginPage from "./Pages/Auth/Login";
 import SignUpPage from "./Pages/Auth/Signup";
 import Home from "./Pages/Home/Home";
 import MyFeed from "./Pages/MyFeed/MyFeed";
+import FindUsers from "./Pages/FindUsers/FindUsers";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/discover" element={<Home />} />
 				<Route path="/my-feed" element={<MyFeed />} />
+				<Route path="/find-users" element={<FindUsers />} />
 			</Routes>
 		</BrowserRouter>
 	);

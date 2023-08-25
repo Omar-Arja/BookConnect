@@ -41,7 +41,6 @@ const Home = () => {
                     method: "GET",
                     route: "/posts",
                 });
-                console.log(response);
     
                 if (response.length > 0) {
                     setBooks(response);
