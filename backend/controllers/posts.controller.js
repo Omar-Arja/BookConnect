@@ -59,6 +59,7 @@ const getDefaultFeed = async (req, res) => {
     }
   }
 
+  feed.sort((a, b) => b.createdAt - a.createdAt);
   feed.sort((a, b) => b.likeCount - a.likeCount);
   res.send(feed);
   } catch (error) {
@@ -72,7 +73,7 @@ const createPost = async (req, res) => {
   const { user } = req;
   const { title, author, genre, review } = req.body;
   const imagePath = req.file.path;
-  const pic_url = `../backend/storage/${imagePath.split("\\").slice(-2).join("/")}`;
+  const pic_url = `../uploads/${imagePath.split("\\").slice(-2).join("/")}`;
 
   try {
     const post = new Post({
@@ -118,7 +119,10 @@ const toggleLikePost = async (req, res) => {
       post.likes.push(newLike);
       await post.save();
 
-      return res.send({ message: "Post liked" });
+      return res.send({
+         status: "success",
+         message: "Post liked" 
+        });
     }
 
     const likeToRemove = post.likes.find(
@@ -129,7 +133,10 @@ const toggleLikePost = async (req, res) => {
       await Like.findByIdAndDelete(likeToRemove._id);
       post.likes.pull(likeToRemove._id);
       await post.save();
-      return res.send({ message: "Post unliked" });
+      return res.send({ 
+        status: "success",
+        message: "Post unliked"
+       });
     }
 
     return res.status(404).send({ message: "Like not found" });
