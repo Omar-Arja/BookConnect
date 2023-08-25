@@ -6,11 +6,14 @@ import { sendRequest } from "../../config/request";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineExplore, MdPersonSearch } from "react-icons/md";
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaUsers } from "react-icons/fa";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
-const Home = () => {
+
+const MyFeed = () => {
+    const navigate = useNavigate();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [books, setBooks] = useState(null);
@@ -96,10 +99,11 @@ const Home = () => {
                         {loading ? (
                         <h1>Loading...</h1>
                         ) : (
-                        <>
-                            <h2>No Posts Yet</h2>
-                            <button className="button">Share your favorite book</button>
-                        </>
+                            <>
+                            <h2>Your Feed is Empty</h2>
+                            <p>Start by following users to see their posts here.</p>
+                            <button className="button empty-find-users" onClick={() => navigate("/find-users")}><FaUsers className="user-icon" />Find Users</button>
+                          </>
                         )}
                     </div>
                     )}
@@ -114,4 +118,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default MyFeed;

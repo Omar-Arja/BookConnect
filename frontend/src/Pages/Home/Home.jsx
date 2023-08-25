@@ -8,9 +8,11 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineExplore, MdPersonSearch } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [books, setBooks] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -121,7 +123,7 @@ const Home = () => {
             ) : (
               <>
                 <h2>No Posts Yet</h2>
-                <button className="button">Share your favorite book</button>
+                <button className="button" onClick={() => navigate("/create-post")}>Share your favorite book</button>
               </>
             )}
           </div>
