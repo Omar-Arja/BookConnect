@@ -78,8 +78,9 @@ const FindUsers = () => {
   ];
 
   return (
-    <div className="find-users">
+    <div className="home">
       <Sidebar items={items} />
+    <div className="find-users">
       <div className="main-content">
       <div className="search-bar">
             <input
@@ -104,6 +105,7 @@ const FindUsers = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
