@@ -10,7 +10,6 @@ import { FaUserAlt } from "react-icons/fa";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const Home = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,17 +19,17 @@ const Home = () => {
   const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
 
-    return () => {
-      clearTimeout(timer);
-    };
-   }, [value, delay]);
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [value, delay]);
 
-  return debouncedValue;
+    return debouncedValue;
   };
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -47,7 +46,7 @@ const Home = () => {
             setBooks(response.posts);
           }
         } else {
-            fetchPosts();
+          fetchPosts();
         }
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -77,7 +76,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-
     fetchPosts();
   }, []);
 
@@ -123,7 +121,12 @@ const Home = () => {
             ) : (
               <>
                 <h2>No Posts Yet</h2>
-                <button className="button" onClick={() => navigate("/create-post")}>Share your favorite book</button>
+                <button
+                  className="button"
+                  onClick={() => navigate("/create-post")}
+                >
+                  Share your favorite book
+                </button>
               </>
             )}
           </div>

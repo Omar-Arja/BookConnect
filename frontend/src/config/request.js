@@ -12,9 +12,9 @@ export const sendRequest = async ({
 
   const headers = includeHeaders
     ? {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        "Content-Type": "application/json",
-      }
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      "Content-Type": "application/json",
+    }
     : {};
 
   try {

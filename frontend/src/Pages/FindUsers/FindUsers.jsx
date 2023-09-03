@@ -17,13 +17,13 @@ const FindUsers = () => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
+      const timer = setTimeout(() => {
         setDebouncedValue(value);
-        }, delay);
+      }, delay);
 
-        return () => {
+      return () => {
         clearTimeout(timer);
-        };
+      };
     }, [value, delay]);
 
     return debouncedValue;
@@ -78,26 +78,28 @@ const FindUsers = () => {
   ];
 
   return (
-      <div className="find-users">
-        <Sidebar items={items} />
+    <div className="find-users">
+      <Sidebar items={items} />
       <div className="main-content">
-      <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-            {<BiSearchAlt2 className="search-icon" />}
-          </div>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          {<BiSearchAlt2 className="search-icon" />}
+        </div>
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           <div className="user-results">
-           { users.length === 0 && <div className="empty-state">
-              <h1>Find other book lovers</h1>
-              </div>}
+            {users.length === 0 && (
+              <div className="empty-state">
+                <h1>Find other book lovers</h1>
+              </div>
+            )}
             {users?.map((user) => (
               <ProfileCard key={user._id} user={user} />
             ))}

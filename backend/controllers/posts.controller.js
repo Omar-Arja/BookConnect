@@ -36,32 +36,33 @@ const getFeed = async (req, res) => {
 };
 
 const getDefaultFeed = async (req, res) => {
-  try {const users = await User.find().populate("posts").populate({ path: "posts", populate: { path: "likes" } });
-  
-  const feed = [];
+  try {
+    const users = await User.find().populate("posts").populate({ path: "posts", populate: { path: "likes" } });
 
-  for (const user of users) {
-    for (const post of user.posts) {
-      const postObj = post.toObject();
-      postObj.userId = user._id;
-      postObj.username = user.name;
+    const feed = [];
 
-      const likedPost = await Post.findById(postObj._id).populate("likes");
+    for (const user of users) {
+      for (const post of user.posts) {
+        const postObj = post.toObject();
+        postObj.userId = user._id;
+        postObj.username = user.name;
 
-      if (likedPost) {
-        postObj.isLiked = likedPost.likes.some(
-          (like) => like.user && like.user._id.toString() === req.user._id.toString()
-        );
-        postObj.likeCount = likedPost.likes.length;
+        const likedPost = await Post.findById(postObj._id).populate("likes");
 
-        feed.push(postObj);
-      } 
+        if (likedPost) {
+          postObj.isLiked = likedPost.likes.some(
+            (like) => like.user && like.user._id.toString() === req.user._id.toString()
+          );
+          postObj.likeCount = likedPost.likes.length;
+
+          feed.push(postObj);
+        }
+      }
     }
-  }
 
-  feed.sort((a, b) => b.createdAt - a.createdAt);
-  feed.sort((a, b) => b.likeCount - a.likeCount);
-  res.send(feed);
+    feed.sort((a, b) => b.createdAt - a.createdAt);
+    feed.sort((a, b) => b.likeCount - a.likeCount);
+    res.send(feed);
   } catch (error) {
     console.error("Error getting feed:", error);
     res.status(500).send({ message: "Something went wrong", error });
@@ -120,9 +121,9 @@ const toggleLikePost = async (req, res) => {
       await post.save();
 
       return res.send({
-         status: "success",
-         message: "Post liked" 
-        });
+        status: "success",
+        message: "Post liked"
+      });
     }
 
     const likeToRemove = post.likes.find(
@@ -133,10 +134,10 @@ const toggleLikePost = async (req, res) => {
       await Like.findByIdAndDelete(likeToRemove._id);
       post.likes.pull(likeToRemove._id);
       await post.save();
-      return res.send({ 
+      return res.send({
         status: "success",
         message: "Post unliked"
-       });
+      });
     }
 
     return res.status(404).send({ message: "Like not found" });

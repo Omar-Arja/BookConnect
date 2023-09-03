@@ -4,8 +4,8 @@
 }
 
 .empty-find-users {
-    display: flex;
-    align-items: space-between;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  align-items: space-between;
+  justify-content: center;
+  gap: 10px;
 }
